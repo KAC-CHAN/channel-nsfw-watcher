@@ -1,2 +1,2 @@
 pyrogram
-nsfw_detector
+deeppavlov 
