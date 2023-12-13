@@ -17,13 +17,24 @@ bot = pyrogram.Client("nsfw_channel_bot",
 @bot.on_message()
 async def check_nsfw(client, message):
 
-  media = message.photo # etc
+  # Check only messages in channel
+  if not message.forward_from_chat:
+    return
+
+  # Get media from message  
+  media = message.photo or message.animation or message.video or message.sticker
 
   if media:
-    prediction = classifier({'image': media})['prediction']
+    # Pass media to classifier
+    prediction = classifier({'image': media})['prediction']  
+    # Check prediction
     is_nsfw = prediction == 'nsfw'
-  
+
   if is_nsfw:
+    # Delete NSFW message
+    print("Deleting NSFW message")
     await message.delete()
 
-bot.run()
+# Run bot
+if __name__ == '__main__':
+  bot.run()
