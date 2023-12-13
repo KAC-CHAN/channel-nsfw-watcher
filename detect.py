@@ -1,7 +1,7 @@
 #Telegram @izuya
 
 import pyrogram
-from deeppavlov import configs, build_model
+import deeppavlov
 
 classifier = build_model(configs.nsfw.nsfw_bert)
 
@@ -14,27 +14,18 @@ bot = pyrogram.Client("nsfw_channel_bot",
                       api_hash,
                       bot_token=bot_token)
 
+classifier = deeppavlov.build_model(deeppavlov.configs.bert_base_cased.classify_bert)
+
 @bot.on_message()
 async def check_nsfw(client, message):
 
-  # Check only messages in channel
-  if not message.forward_from_chat:
-    return
-
-  # Get media from message  
-  media = message.photo or message.animation or message.video or message.sticker
+  media = message.photo or message.animation or message.video  
 
   if media:
-    # Pass media to classifier
-    prediction = classifier({'image': media})['prediction']  
-    # Check prediction
-    is_nsfw = prediction == 'nsfw'
+    prediction = classifier({'image': media})['prediction']
+    is_nsfw = prediction == 'porn'
 
-  if is_nsfw:
-    # Delete NSFW message
-    print("Deleting NSFW message")
+  if is_nsfw:  
     await message.delete()
 
-# Run bot
-if __name__ == '__main__':
-  bot.run()
+bot.run()
