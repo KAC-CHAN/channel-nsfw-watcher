@@ -3,8 +3,6 @@
 import pyrogram
 import deeppavlov
 
-classifier = build_model(configs.nsfw.nsfw_bert)
-
 api_id = 26788480
 api_hash = "858d65155253af8632221240c535c314"
 bot_token = "6551178239:AAGWE_oTVdeyoYGxCCabwdiN1xOFpfj3FfE"
