@@ -12,11 +12,13 @@ bot = pyrogram.Client("nsfw_channel_bot",
                       api_hash,
                       bot_token=bot_token)
 
-from deeppavlov import build_model, list_configs
+from deeppavlov.core.commands.train import ModelTrainer
+from deeppavlov import build_model
 
-classifier = build_model(
-  deeppavlov.configs.nsfw.classify_deeppavlov
-)
+trainer = ModelTrainer()
+print(trainer.configs) 
+
+classifier = build_model(<NSFW config>)
 
 @bot.on_message()
 async def check_nsfw(client, message):
