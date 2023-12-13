@@ -18,7 +18,10 @@ from deeppavlov import build_model
 trainer = ModelTrainer()
 print(trainer.configs) 
 
-classifier = build_model(<NSFW config>)
+# Get NSFW config 
+nsfw_config = <config identified from print>
+
+classifier = build_model(nsfw_config)
 
 @bot.on_message()
 async def check_nsfw(client, message):
